@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import GetProdutos from "../hooks/GetProdutos"
 
-export default function ProdutoDetalhe({ id }){
-
+export default function ProdutoDetalhe(){
+  const { id } = useParams()
   const [produto, setProduto] = useState(null)
 
   useEffect(() => {
