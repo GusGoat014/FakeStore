@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import GetProdutos from "../hooks/GetProdutos"
+import "./ProdutoDetalhes.css"
 
 export default function ProdutoDetalhe(){
   const { id } = useParams()
@@ -16,7 +17,24 @@ export default function ProdutoDetalhe(){
     loadProduto()
   }, [id])
 
-    return(
-        <h1>{produto ? produto.title : "carregando"}</h1>
-    )
+  if (!produto) {
+    return <div className="loading">Carregando...</div>
+  }
+
+  return (
+    <div className="produto-detalhes">
+      <div className="produto-container">
+        <img src={produto.image} alt={produto.title} className="produto-imagem" />
+        <div className="produto-info">
+          <h1 className="produto-titulo">{produto.title}</h1>
+          <p className="produto-categoria">{produto.category}</p>
+          <p className="produto-descricao">{produto.description}</p>
+          <p className="produto-preco">${produto.price}</p>
+          <div className="produto-rating">
+            <span>Rating: {produto.rating.rate} ({produto.rating.count} reviews)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
