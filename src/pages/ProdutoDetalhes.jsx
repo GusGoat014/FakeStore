@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import GetProdutos from "../hooks/GetProdutos";
 import "./ProdutoDetalhes.css";
@@ -6,21 +5,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import GetProdutos from "../hooks/GetProdutos"
-import "./ProdutoDetalhes.css"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
 
 export default function ProdutoDetalhe() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [produto, setProduto] = useState(null);
   const [NumCarinho, setNumCarinho] = useState(0);
-export default function ProdutoDetalhe() {
-  const { id } = useParams()
-  const [produto, setProduto] = useState(null)
-  const [NumCarinho, setNumCarinho] = useState(0)
 
   useEffect(() => {
     async function loadProduto() {
@@ -76,11 +66,6 @@ export default function ProdutoDetalhe() {
         <img src={produto.image} alt={produto.title} className="produto-imagem" />
 
         <button onClick={() => navigate(-1)} className="botao-voltar">Voltar</button>
-        <img
-          src={produto.image}
-          alt={produto.title}
-          className="produto-imagem"
-        />
         <div className="produto-info">
           <h1>{produto.title}</h1>
           <p>{produto.category}</p>
@@ -127,5 +112,4 @@ export default function ProdutoDetalhe() {
       <ToastContainer />
     </div>
   );
-}
 }
