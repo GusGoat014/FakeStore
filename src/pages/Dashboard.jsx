@@ -1,28 +1,18 @@
 import React from "react";
+import "./Dashboard.css";
 
 function Card({ titulo, valor }) {
   return (
-    <div style={{
-      background: "#fff",
-      padding: "20px",
-      borderRadius: "10px",
-      boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-    }}>
-      <h2 style={{ color: "#666", fontSize: "14px" }}>{titulo}</h2>
-      <p style={{ fontSize: "22px", fontWeight: "bold" }}>{valor}</p>
+    <div className="card">
+      <h2>{titulo}</h2>
+      <p>{valor}</p>
     </div>
   );
 }
 
 function Sidebar() {
   return (
-    <div style={{
-      width: "200px",
-      background: "#111",
-      color: "#fff",
-      height: "100vh",
-      padding: "20px"
-    }}>
+    <div className="sidebar">
       <h1>Minha Loja</h1>
       <ul>
         <li>Dashboard</li>
@@ -36,11 +26,7 @@ function Sidebar() {
 
 function Header() {
   return (
-    <div style={{
-      background: "#fff",
-      padding: "15px",
-      boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-    }}>
+    <div className="header">
       <h1>Dashboard</h1>
     </div>
   );
@@ -54,14 +40,9 @@ function TabelaPedidos() {
   ];
 
   return (
-    <div style={{
-      background: "#fff",
-      padding: "20px",
-      marginTop: "20px",
-      borderRadius: "10px"
-    }}>
+    <div className="tabela-pedidos">
       <h2>Últimos Pedidos</h2>
-      <table width="100%">
+      <table>
         <thead>
           <tr>
             <th>ID</th>
@@ -85,18 +66,14 @@ function TabelaPedidos() {
 
 export default function Dashboard() {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="dashboard-container">
       <Sidebar />
 
-      <div style={{ flex: 1, background: "#f5f5f5", minHeight: "100vh" }}>
+      <div className="content">
         <Header />
 
-        <div style={{ padding: "20px" }}>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "20px"
-          }}>
+        <div className="content-padding">
+          <div className="cards-grid">
             <Card titulo="Faturamento" valor="R$ 5000" />
             <Card titulo="Pedidos" valor="120" />
             <Card titulo="Usuários" valor="45" />
