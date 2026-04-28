@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Carrinho from './pages/Carrinho'
 import ProdutoDetalhe from './pages/ProdutoDetalhes'
 import { BrowserRouter, NavLink,Route,Routes } from 'react-router-dom'
+import Cadastro from './pages/Cadastro'
 
 export default function App() {
 
