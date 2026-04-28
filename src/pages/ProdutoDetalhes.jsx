@@ -6,6 +6,7 @@ import "./ProdutoDetalhes.css"
 export default function ProdutoDetalhe(){
   const { id } = useParams()
   const [produto, setProduto] = useState(null)
+  const [NumCarinho,setNumCarinho] = useState(0);
 
   useEffect(() => {
     async function loadProduto(){
@@ -30,6 +31,15 @@ export default function ProdutoDetalhe(){
           <p className="produto-categoria">{produto.category}</p>
           <p className="produto-descricao">{produto.description}</p>
           <p className="produto-preco">${produto.price}</p>
+          <div className="botoes-acoes">
+            <button onClick={()=>{alert(NumCarinho," itens comprados com sucesso")}}>Comprar</button>
+            <button>Adicionar ao carinho</button>
+          </div>
+          <div className="quantidade-container">
+            <button onClick={()=>{NumCarinho > 0 ? setNumCarinho(NumCarinho => NumCarinho - 1) : console.log("carinho não pode ter menos que 0");}}>-</button>
+            <p>{NumCarinho}</p>
+            <button onClick={()=>{setNumCarinho(NumCarinho => NumCarinho + 1)}}>+</button>
+          </div>
           <div className="produto-rating">
             <span>Rating: {produto.rating.rate} ({produto.rating.count} reviews)</span>
           </div>
