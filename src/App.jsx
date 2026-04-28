@@ -5,16 +5,18 @@ import Carrinho from './pages/Carrinho'
 import ProdutoDetalhe from './pages/ProdutoDetalhes'
 import Cadastro from './pages/Cadastro'
 import { BrowserRouter, NavLink,Route,Routes } from 'react-router-dom'
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
 
   return (
+    
     <>
     <BrowserRouter>
         <nav className="navbar">
           <NavLink to='/' className="nav-link">Home</NavLink>
           <NavLink to='/login' className="nav-link">Login</NavLink>
-          <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
+          <NavLink to='/Dashboard' className="nav-link">Dash</NavLink>
           <NavLink to='/carrinho' className="nav-link">🛒</NavLink>
         </nav>
         <Routes>
@@ -22,7 +24,7 @@ export default function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/ProdutoDetalhes/:id' element={<ProdutoDetalhe/>}/>
           <Route path='/carrinho' element={<Carrinho/>}/>
-          <Route path='/cadastro' element={<Cadastro/>}/>
+          <Route path='/Dashboard' element={<Dashboard/>}/>
         </Routes>
       </BrowserRouter>
     </>
