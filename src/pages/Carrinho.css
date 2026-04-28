@@ -1,0 +1,243 @@
+.carrinho-page {
+  padding: 40px 24px;
+  max-width: 1180px;
+  margin: 0 auto;
+  color: #1f2937;
+}
+
+.carrinho-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.carrinho-header h1 {
+  font-size: 2.8rem;
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.carrinho-header p {
+  margin: 0;
+  color: #4b5563;
+  max-width: 600px;
+  line-height: 1.75;
+}
+
+.carrinho-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+}
+
+.carrinho-items {
+  display: grid;
+  gap: 20px;
+}
+
+.carrinho-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.carrinho-item:hover {
+  transform: translateY(-2px);
+  border-color: #dbeafe;
+}
+
+.item-image {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 18px;
+  background: #f8fafc;
+  padding: 14px;
+  flex-shrink: 0;
+}
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-details h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+.item-price {
+  margin: 0;
+  color: #ef4444;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.item-actions label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #475569;
+  font-weight: 600;
+}
+
+.item-actions input {
+  width: 80px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #111827;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.item-actions input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.remove-button {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  background: #ef4444;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.remove-button:hover {
+  transform: translateY(-1px);
+  background: #dc2626;
+}
+
+.carrinho-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.summary-card {
+  background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
+  border-radius: 26px;
+  padding: 28px;
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  box-shadow: 0 24px 60px rgba(99, 102, 241, 0.12);
+  position: sticky;
+  top: 24px;
+}
+
+.summary-card h2 {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+}
+
+.summary-card p {
+  margin: 0 0 24px;
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #334155;
+  margin-bottom: 14px;
+  font-size: 1rem;
+}
+
+.summary-line.total {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 1.16rem;
+  font-weight: 700;
+}
+
+.checkout-button {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.checkout-button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+}
+
+.carrinho-empty {
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 22px;
+  padding: 36px;
+  text-align: center;
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 980px) {
+  .carrinho-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carrinho-summary {
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .carrinho-page {
+    padding: 24px 16px;
+  }
+
+  .carrinho-header {
+    align-items: flex-start;
+  }
+
+  .carrinho-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item-image {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .item-actions {
+    justify-content: stretch;
+  }
+}
