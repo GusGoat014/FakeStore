@@ -43,6 +43,7 @@ export default function ProdutoDetalhe() {
           <div className="botoes-acoes">
             <button onClick={()=>{toast.success(NumCarinho + " itens comprados com sucesso")}}>Comprar</button>
             <button onClick={()=>{toast.success(NumCarinho + " itens adicionados no carinho sucesso")}}>Adicionar ao carinho</button>
+            <button onClick={()=>{toast.success(NumCarinho + " itens removidos no carinho sucesso")}}>Remover ao carinho</button>
           </div>
           <div className="quantidade-container">
             <button
