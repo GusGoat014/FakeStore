@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Carrinho from './pages/Carrinho'
 import ProdutoDetalhe from './pages/ProdutoDetalhes'
+import Cadastro from './pages/Cadastro'
 import { BrowserRouter, NavLink,Route,Routes } from 'react-router-dom'
 import Cadastro from './pages/Cadastro'
 
@@ -14,6 +15,7 @@ export default function App() {
         <nav className="navbar">
           <NavLink to='/' className="nav-link">Home</NavLink>
           <NavLink to='/login' className="nav-link">Login</NavLink>
+          <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
           <NavLink to='/carrinho' className="nav-link">🛒</NavLink>
         </nav>
         <Routes>
@@ -21,6 +23,7 @@ export default function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/ProdutoDetalhes/:id' element={<ProdutoDetalhe/>}/>
           <Route path='/carrinho' element={<Carrinho/>}/>
+          <Route path='/cadastro' element={<Cadastro/>}/>
         </Routes>
       </BrowserRouter>
     </>
