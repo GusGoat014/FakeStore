@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "schema";
+import { schema } from "./schema";
 import "./Cadastro.css";
 
 export default function Cadastro(){
