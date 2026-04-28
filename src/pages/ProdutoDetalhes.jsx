@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import GetProdutos from "../hooks/GetProdutos"
 import "./ProdutoDetalhes.css"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProdutoDetalhe(){
   const { id } = useParams()
@@ -32,8 +34,8 @@ export default function ProdutoDetalhe(){
           <p className="produto-descricao">{produto.description}</p>
           <p className="produto-preco">${produto.price}</p>
           <div className="botoes-acoes">
-            <button onClick={()=>{alert(NumCarinho," itens comprados com sucesso")}}>Comprar</button>
-            <button>Adicionar ao carinho</button>
+            <button onClick={()=>{toast.success(NumCarinho + " itens comprados com sucesso")}}>Comprar</button>
+            <button onClick={()=>{toast.success(NumCarinho + " itens adicionados no carinho sucesso")}}>Adicionar ao carinho</button>
           </div>
           <div className="quantidade-container">
             <button onClick={()=>{NumCarinho > 0 ? setNumCarinho(NumCarinho => NumCarinho - 1) : console.log("carinho não pode ter menos que 0");}}>-</button>
@@ -45,6 +47,7 @@ export default function ProdutoDetalhe(){
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }
