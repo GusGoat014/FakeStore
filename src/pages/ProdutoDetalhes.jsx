@@ -37,8 +37,8 @@ export default function ProdutoDetalhe(){
           </div>
           <div className="quantidade-container">
             <button onClick={()=>{NumCarinho > 0 ? setNumCarinho(NumCarinho => NumCarinho - 1) : console.log("carinho não pode ter menos que 0");}}>-</button>
-            <p>{NumCarinho}</p>
-            <button onClick={()=>{setNumCarinho(NumCarinho => NumCarinho + 1)}}>+</button>
+            <input value={NumCarinho} onChange={(texto)=>{setNumCarinho(Number(texto.target.value))}} type="text" />
+            <button onClick={()=>{setNumCarinho(NumCarinho + 1)}}>+</button>
           </div>
           <div className="produto-rating">
             <span>Rating: {produto.rating.rate} ({produto.rating.count} reviews)</span>

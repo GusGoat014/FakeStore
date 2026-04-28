@@ -94,10 +94,23 @@
   margin: 0 5px;
 }
 
-.quantidade-container p {
-  margin: 0 10px;
+.quantidade-container input {
+  width: 60px;
+  padding: 10px;
+  text-align: center;
+  border: 2px solid #ddd;
+  border-radius: 8px;
   font-size: 1.2rem;
   font-weight: bold;
+  background: #f8f9fa;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.quantidade-container input:focus {
+  outline: none;
+  border-color: #0984e3;
+  box-shadow: 0 0 5px rgba(9, 132, 227, 0.5);
 }
 
 .produto-rating {
