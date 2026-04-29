@@ -17,7 +17,7 @@ export default function Home(){
 
     return(
         <div className="home-container">
-            <h2>Lojas perigo</h2>
+            <h2>LiarShop</h2>
             <div className="produtos-grid">
                 {Produtos.map((produto) => (
                     <Card key={produto.id}>
@@ -29,7 +29,7 @@ export default function Home(){
                         <p className="produto-categoria">{produto.category}</p>
                         <div className="produto-rating">
                             <span className="estrelas">
-                                {'⭐'.repeat(Math.round(produto.rating.rate))}
+                                {'⭐'.repeat(Math.min(5, Math.max(0, Math.floor(produto.rating.rate || 0))))}
                             </span>
                             <span className="rating-numero">{produto.rating.rate.toFixed(1)}</span>
                             <span className="rating-count">({produto.rating.count})</span>

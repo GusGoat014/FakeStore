@@ -7,6 +7,9 @@ import Cadastro from './pages/Cadastro'
 import { BrowserRouter, NavLink,Route,Routes } from 'react-router-dom'
 import Dashboard from "./pages/Dashboard";
 
+import 'primeicons/primeicons.css';
+        
+
 export default function App() {
 
   return (
@@ -14,11 +17,11 @@ export default function App() {
     <>
     <BrowserRouter>
         <nav className="navbar">
-          <NavLink to='/' className="nav-link">Home</NavLink>
+          <NavLink to='/' className="nav-link"><h2 style={{fontWeight: 'bold'}}>LiarShop</h2></NavLink>
           <NavLink to='/login' className="nav-link">Login</NavLink>
           <NavLink to='/Dashboard' className="nav-link">Dash</NavLink>
           <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
-          <NavLink to='/carrinho' className="nav-link">🛒</NavLink>
+          <NavLink to='/carrinho' className="nav-link"><i className="pi pi-shopping-cart" style={{fontSize:'3rem'}}></i></NavLink>
         </nav>
         <Routes>
           <Route path='/' element={<Home/>}/>
