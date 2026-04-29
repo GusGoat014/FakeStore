@@ -17,6 +17,7 @@ export default function App() {
           <NavLink to='/' className="nav-link">Home</NavLink>
           <NavLink to='/login' className="nav-link">Login</NavLink>
           <NavLink to='/Dashboard' className="nav-link">Dash</NavLink>
+          <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
           <NavLink to='/carrinho' className="nav-link">🛒</NavLink>
         </nav>
         <Routes>
@@ -25,6 +26,7 @@ export default function App() {
           <Route path='/ProdutoDetalhes/:id' element={<ProdutoDetalhe/>}/>
           <Route path='/carrinho' element={<Carrinho/>}/>
           <Route path='/Dashboard' element={<Dashboard/>}/>
+          <Route path='/cadastro' element={<Cadastro/>}/>
         </Routes>
       </BrowserRouter>
     </>
