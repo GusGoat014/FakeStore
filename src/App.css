@@ -1,5 +1,5 @@
 .navbar {
-  background-color: lightblue;
+  background-color: oklch(78.927% 0.08321 221.059);
   padding: 10px;
   display: flex;
   gap: 12px;
@@ -14,7 +14,7 @@
 }
 
 .nav-link {
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   font-weight: bold;
 }

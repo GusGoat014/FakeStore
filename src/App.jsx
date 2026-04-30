@@ -21,7 +21,7 @@ export default function App() {
           <NavLink to='/login' className="nav-link">Login</NavLink>
           <NavLink to='/Dashboard' className="nav-link">Dash</NavLink>
           <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
-          <NavLink to='/carrinho' className="nav-link"><i className="pi pi-shopping-cart" style={{fontSize:'3rem'}}></i></NavLink>
+          <NavLink to='/carrinho' className="nav-link"><i className="pi pi-shopping-cart" style={{fontSize:'1.5rem'}}></i></NavLink>
         </nav>
         <Routes>
           <Route path='/' element={<Home/>}/>
