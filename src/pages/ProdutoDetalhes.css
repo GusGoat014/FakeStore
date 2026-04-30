@@ -145,10 +145,7 @@
   align-items: center;
 }
 
-.produto-rating::before {
-  content: "⭐";
-  margin-right: 5px;
-}
+
 
 .loading {
   display: flex;

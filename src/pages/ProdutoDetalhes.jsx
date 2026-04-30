@@ -118,7 +118,7 @@ export default function ProdutoDetalhe() {
 
           <div className="produto-rating">
             <span>
-              Rating: {produto?.rating?.rate ?? 0} (
+              ⭐ Rating: {produto?.rating?.rate ?? 0} (
               {produto?.rating?.count ?? 0} reviews)
             </span>
           </div>
