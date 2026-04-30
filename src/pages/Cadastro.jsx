@@ -14,7 +14,16 @@ export default function Cadastro(){
   });
 
     const onSubmit = (data) => {
-        console.log("dados: ", data);
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const newUser = {
+            nome: data.nome,
+            senha: data.senha,
+            preferredProducts: [],
+            role: 'user'
+        };
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Usuário cadastrado com sucesso!');
     }
 
   return (
@@ -22,8 +31,8 @@ export default function Cadastro(){
       <div className="cadastro-container">
         <h2>Cadastro</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input {...register("email")} placeholder="Email" />
-          <p>{errors.email?.message}</p>
+          <input {...register("nome")} placeholder="Nome" />
+          <p>{errors.nome?.message}</p>
 
           <input type="password" {...register("senha")} placeholder="Senha" />
           <p>{errors.senha?.message}</p>

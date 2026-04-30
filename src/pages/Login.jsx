@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
-export default function Login(){
-
-
+export default function Login({ setCurrentUser }){
+    const navigate = useNavigate();
 
     const[MostrarSenha,setMostrarSenha] = useState(false);
     const[Caixa,setCaixa] = useState();
@@ -29,12 +29,21 @@ export default function Login(){
     }
 
     function Logar() {
-        if(Caixa){
-            const usuario = {
-                nome: CampoNome,
-                senha: CampoSenha
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(u => u.nome === CampoNome && u.senha === CampoSenha);
+        if (user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            setCurrentUser(user);
+            if (Caixa) {
+                localStorage.setItem("usuario", JSON.stringify({ nome: CampoNome, senha: CampoSenha }));
             }
-            localStorage.setItem("usuario",JSON.stringify(usuario))
+            if (user.role === 'admin') {
+                navigate('/Dashboard');
+            } else {
+                navigate('/');
+            }
+        } else {
+            alert('Usuário ou senha inválidos');
         }
     }
 
