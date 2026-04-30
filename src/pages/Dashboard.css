@@ -1,0 +1,96 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f6fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container geral */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Título */
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Formulário */
+.form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.form h2 {
+  margin-bottom: 15px;
+}
+
+/* Inputs */
+.input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Botão */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #0984e3;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background-color: #74b9ff;
+}
+
+/* Lista de produtos */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões dentro do card */
+.card button {
+  margin-right: 10px;
+}
+
+/* Botão excluir */
+.btn-delete {
+  background-color: #d63031;
+}
+
+.btn-delete:hover {
+  background-color: #ff7675;
+}
+
+/* Botão editar */
+.btn-edit {
+  background-color: #fdcb6e;
+  color: black;
+}
+
+.btn-edit:hover {
+  background-color: #ffeaa7;
+}

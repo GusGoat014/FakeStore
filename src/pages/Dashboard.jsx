@@ -1,87 +1,151 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import "./Dashboard.css";
 
-function Card({ titulo, valor }) {
+function Dashboard() {
+  const [produtos, setProdutos] = useState([]);
+  const [novoProduto, setNovoProduto] = useState({
+    title: "",
+    price: "",
+    description: "",
+  });
+  const [editando, setEditando] = useState(null);
+
+
+  useEffect(() => {
+    const loadProdutos = async () => {
+      try {
+        const res = await fetch("https://fakestoreapi.com/products");
+
+        if (!res.ok) {
+          throw new Error("Erro ao buscar produtos");
+        }
+
+        const data = await res.json();
+        setProdutos(data);
+      } catch (erro) {
+        console.error("Erro:", erro);
+      }
+    };
+
+    loadProdutos();
+  }, []);
+
+
+  const criarProduto = async () => {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      method: "POST",
+      body: JSON.stringify(novoProduto),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+    setProdutos([...produtos, data]);
+
+    setNovoProduto({ title: "", price: "", description: "" });
+  };
+
+
+  const deletarProduto = async (id) => {
+    await fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "DELETE",
+    });
+
+    setProdutos(produtos.filter((p) => p.id !== id));
+  };
+
+ 
+  const salvarEdicao = async () => {
+    const res = await fetch(
+      `https://fakestoreapi.com/products/${editando.id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(editando),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await res.json();
+
+    setProdutos(
+      produtos.map((p) => (p.id === data.id ? data : p))
+    );
+
+    setEditando(null);
+  };
+
   return (
-    <div className="bg-white shadow-md rounded-2xl p-4">
-      <h2 className="text-gray-500 text-sm">{titulo}</h2>
-      <p className="text-2xl font-bold">{valor}</p>
-    </div>
-  );
-}
+    <div style={{ padding: "20px" }}>
+      <h1>Dashboard (Admin)</h1>
 
-function Sidebar() {
-  return (
-    <div className="w-60 bg-gray-900 text-white h-screen p-5">
-      <h1 className="text-xl font-bold mb-6">Minha Loja</h1>
-      <ul className="space-y-3">
-        <li>Dashboard</li>
-        <li>Produtos</li>
-        <li>Pedidos</li>
-        <li>Usuários</li>
-      </ul>
-    </div>
-  );
-}
+      <h2>Criar Produto</h2>
+      <input
+        placeholder="Título"
+        value={novoProduto.title}
+        onChange={(e) =>
+          setNovoProduto({ ...novoProduto, title: e.target.value })
+        }
+      />
+      <input
+        placeholder="Preço"
+        value={novoProduto.price}
+        onChange={(e) =>
+          setNovoProduto({ ...novoProduto, price: e.target.value })
+        }
+      />
+      <input
+        placeholder="Descrição"
+        value={novoProduto.description}
+        onChange={(e) =>
+          setNovoProduto({
+            ...novoProduto,
+            description: e.target.value,
+          })
+        }
+      />
+      <button onClick={criarProduto}>Criar</button>
 
-function Header() {
-  return (
-    <div className="bg-white shadow p-4 flex justify-between">
-      <h1 className="text-lg font-semibold">Dashboard</h1>
-      <span>Admin</span>
-    </div>
-  );
-}
 
-function TabelaPedidos() {
-  const pedidos = [
-    { id: 1, cliente: "João", valor: "R$ 120" },
-    { id: 2, cliente: "Maria", valor: "R$ 80" },
-    { id: 3, cliente: "Carlos", valor: "R$ 200" }
-  ];
+      <h2>Produtos</h2>
 
-  return (
-    <div className="bg-white shadow-md rounded-2xl p-4 mt-6">
-      <h2 className="mb-4 font-semibold">Últimos Pedidos</h2>
-      <table className="w-full text-left">
-        <thead>
-          <tr className="border-b">
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pedidos.map((p) => (
-            <tr key={p.id} className="border-b">
-              <td>{p.id}</td>
-              <td>{p.cliente}</td>
-              <td>{p.valor}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-export default function Dashboard() {
-  return (
-    <div className="flex">
-      <Sidebar />
-
-      <div className="flex-1 bg-gray-100 min-h-screen">
-        <Header />
-
-        <div className="p-6">
-          <div className="grid grid-cols-3 gap-4">
-            <Card titulo="Faturamento" valor="R$ 5000" />
-            <Card titulo="Pedidos" valor="120" />
-            <Card titulo="Usuários" valor="45" />
-          </div>
-
-          <TabelaPedidos />
+      {produtos.map((p) => (
+        <div
+          key={p.id}
+          style={{
+            border: "1px solid #ccc",
+            margin: "10px 0",
+            padding: "10px",
+          }}
+        >
+          {editando?.id === p.id ? (
+            <>
+              <input
+                value={editando.title}
+                onChange={(e) =>
+                  setEditando({ ...editando, title: e.target.value })
+                }
+              />
+              <input
+                value={editando.price}
+                onChange={(e) =>
+                  setEditando({ ...editando, price: e.target.value })
+                }
+              />
+              <button onClick={salvarEdicao}>Salvar</button>
+            </>
+          ) : (
+            <>
+              <h3>{p.title}</h3>
+              <p>R$ {p.price}</p>
+              <button onClick={() => setEditando(p)}>Editar</button>
+              <button onClick={() => deletarProduto(p.id)}>
+                Excluir
+              </button>
+            </>
+          )}
         </div>
-      </div>
+      ))}
     </div>
   );
 }
+
+export default Dashboard;
