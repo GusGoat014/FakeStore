@@ -1,49 +1,151 @@
-import { useState, useEffect } from "react";
-import GetProdutos from "../hooks/GetProdutos";
+import { useEffect, useState } from "react";
 import "./Dashboard.css";
-import { useNavigate } from "react-router-dom";
-import Card from "../COMPONENTS/Card";
 
-export default function Dashboard(){
-    const [Produtos, setProdutos] = useState([]);
-    const navigate = useNavigate();
+function Dashboard() {
+  const [produtos, setProdutos] = useState([]);
+  const [novoProduto, setNovoProduto] = useState({
+    title: "",
+    price: "",
+    description: "",
+  });
+  const [editando, setEditando] = useState(null);
 
-    useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!currentUser) {
-            navigate('/login');
-            return;
+
+  useEffect(() => {
+    const loadProdutos = async () => {
+      try {
+        const res = await fetch("https://fakestoreapi.com/products");
+
+        if (!res.ok) {
+          throw new Error("Erro ao buscar produtos");
         }
-        GetProdutos().then((response) => {
-            const preferred = response.data.filter(produto => currentUser.preferredProducts.includes(produto.id));
-            setProdutos(preferred);
-        });
-    }, [navigate]);
 
-    return(
-        <div className="dashboard-container">
-            <h2>Dashboard - Produtos Preferidos</h2>
-            <div className="produtos-grid">
-                {Produtos.map((produto) => (
-                    <Card key={produto.id}>
-                        <div className="imagem-container" onClick={() => navigate(`/ProdutoDetalhes/${produto.id}`)}>
-                            <img src={produto.image} alt={produto.title} className="produto-imagem" />
-                            <div className="overlay-detalhes">Ver detalhes</div>
-                        </div>
-                        <h3>{produto.title}</h3>
-                        <p className="produto-categoria">{produto.category}</p>
-                        <div className="produto-rating">
-                            <span className="estrelas">
-                                {'⭐'.repeat(Math.min(5, Math.max(0, Math.floor(produto.rating.rate || 0))))}
-                            </span>
-                            <span className="rating-numero">{produto.rating.rate.toFixed(1)}</span>
-                            <span className="rating-count">({produto.rating.count})</span>
-                        </div>
-                        <p className="produto-descricao">{produto.description.substring(0, 80)}...</p>
-                        <p className="produto-preco">R$ {(produto.price * 5).toFixed(2)}</p>
-                    </Card>
-                ))}
-            </div>
+        const data = await res.json();
+        setProdutos(data);
+      } catch (erro) {
+        console.error("Erro:", erro);
+      }
+    };
+
+    loadProdutos();
+  }, []);
+
+
+  const criarProduto = async () => {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      method: "POST",
+      body: JSON.stringify(novoProduto),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+    setProdutos([...produtos, data]);
+
+    setNovoProduto({ title: "", price: "", description: "" });
+  };
+
+
+  const deletarProduto = async (id) => {
+    await fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "DELETE",
+    });
+
+    setProdutos(produtos.filter((p) => p.id !== id));
+  };
+
+ 
+  const salvarEdicao = async () => {
+    const res = await fetch(
+      `https://fakestoreapi.com/products/${editando.id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(editando),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const data = await res.json();
+
+    setProdutos(
+      produtos.map((p) => (p.id === data.id ? data : p))
+    );
+
+    setEditando(null);
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1>Dashboard (Admin)</h1>
+
+      <h2>Criar Produto</h2>
+      <input
+        placeholder="Título"
+        value={novoProduto.title}
+        onChange={(e) =>
+          setNovoProduto({ ...novoProduto, title: e.target.value })
+        }
+      />
+      <input
+        placeholder="Preço"
+        value={novoProduto.price}
+        onChange={(e) =>
+          setNovoProduto({ ...novoProduto, price: e.target.value })
+        }
+      />
+      <input
+        placeholder="Descrição"
+        value={novoProduto.description}
+        onChange={(e) =>
+          setNovoProduto({
+            ...novoProduto,
+            description: e.target.value,
+          })
+        }
+      />
+      <button onClick={criarProduto}>Criar</button>
+
+
+      <h2>Produtos</h2>
+
+      {produtos.map((p) => (
+        <div
+          key={p.id}
+          style={{
+            border: "1px solid #ccc",
+            margin: "10px 0",
+            padding: "10px",
+          }}
+        >
+          {editando?.id === p.id ? (
+            <>
+              <input
+                value={editando.title}
+                onChange={(e) =>
+                  setEditando({ ...editando, title: e.target.value })
+                }
+              />
+              <input
+                value={editando.price}
+                onChange={(e) =>
+                  setEditando({ ...editando, price: e.target.value })
+                }
+              />
+              <button onClick={salvarEdicao}>Salvar</button>
+            </>
+          ) : (
+            <>
+              <h3>{p.title}</h3>
+              <p>R$ {p.price}</p>
+              <button onClick={() => setEditando(p)}>Editar</button>
+              <button onClick={() => deletarProduto(p.id)}>
+                Excluir
+              </button>
+            </>
+          )}
         </div>
-    )
+      ))}
+    </div>
+  );
 }
+
+export default Dashboard;
