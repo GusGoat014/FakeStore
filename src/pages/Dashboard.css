@@ -6,6 +6,7 @@
 
 .dashboard-header {
   display: flex;
+  color: #ffffff;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
@@ -15,7 +16,7 @@
 
 .dashboard-subtitle {
   margin: 0 0 10px;
-  color: #5b63e6;
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.82rem;
