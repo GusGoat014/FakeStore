@@ -1,11 +1,13 @@
 .navbar {
   background-color: oklch(78.927% 0.08321 221.059);
-  padding: 10px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
   width: 100%;
   max-width: 100%;
-  flex-wrap: wrap;
+  min-height: 70px;
+  padding: 0 20px;
   box-sizing: border-box;
 }
 
@@ -17,4 +19,6 @@
   color: rgb(255, 255, 255);
   text-decoration: none;
   font-weight: bold;
+  display: inline-flex;
+  align-items: center;
 }
