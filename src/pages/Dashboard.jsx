@@ -1,5 +1,15 @@
 ﻿import { useEffect, useState } from "react";
 import "./Dashboard.css";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+
+const productSchema = Yup.object().shape({
+  title: Yup.string().required('Título é obrigatório'),
+  price: Yup.number().required('Preço é obrigatório').positive('Preço deve ser positivo'),
+  description: Yup.string().required('Descrição é obrigatória'),
+});
 
 function Dashboard() {
   const [produtos, setProdutos] = useState([]);
@@ -9,6 +19,10 @@ function Dashboard() {
     description: "",
   });
   const [editando, setEditando] = useState(null);
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(productSchema)
+  });
 
   useEffect(() => {
     const loadProdutos = async () => {
@@ -29,42 +43,66 @@ function Dashboard() {
     loadProdutos();
   }, []);
 
-  const criarProduto = async () => {
-    const res = await fetch("https://fakestoreapi.com/products", {
-      method: "POST",
-      body: JSON.stringify(novoProduto),
-      headers: { "Content-Type": "application/json" },
-    });
+  const criarProduto = async (data) => {
+    try {
+      const res = await fetch("https://fakestoreapi.com/products", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
 
-    const data = await res.json();
-    setProdutos([...produtos, data]);
-    setNovoProduto({ title: "", price: "", description: "" });
+      if (!res.ok) {
+        throw new Error('Erro ao criar produto');
+      }
+
+      const newProduct = await res.json();
+      setProdutos([...produtos, newProduct]);
+      reset();
+      toast.success('Produto criado com sucesso!');
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const deletarProduto = async (id) => {
-    await fetch(`https://fakestoreapi.com/products/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      await fetch(`https://fakestoreapi.com/products/${id}`, {
+        method: "DELETE",
+      });
 
-    setProdutos(produtos.filter((p) => p.id !== id));
+      setProdutos(produtos.filter((p) => p.id !== id));
+      toast.success('Produto deletado com sucesso!');
+    } catch (error) {
+      toast.error('Erro ao deletar produto');
+    }
   };
 
   const salvarEdicao = async () => {
-    const res = await fetch(
-      `https://fakestoreapi.com/products/${editando.id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(editando),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    try {
+      const res = await fetch(
+        `https://fakestoreapi.com/products/${editando.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(editando),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-    const data = await res.json();
-    setProdutos(produtos.map((p) => (p.id === data.id ? data : p)));
-    setEditando(null);
+      if (!res.ok) {
+        throw new Error('Erro ao salvar edição');
+      }
+
+      const data = await res.json();
+      setProdutos(produtos.map((p) => (p.id === data.id ? data : p)));
+      setEditando(null);
+      toast.success('Produto editado com sucesso!');
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
+    
     <div className="dashboard-page">
       <header className="dashboard-header">
         <div>
@@ -81,48 +119,42 @@ function Dashboard() {
             <p>Adicione produtos rápidos ao catálogo.</p>
           </div>
 
-          <div className="form-group">
-            <label>Título</label>
-            <input
-              className="input"
-              placeholder="Título"
-              value={novoProduto.title}
-              onChange={(e) =>
-                setNovoProduto({ ...novoProduto, title: e.target.value })
-              }
-            />
-          </div>
+          <form onSubmit={handleSubmit(criarProduto)}>
+            <div className="form-group">
+              <label>Título</label>
+              <input
+                className="input"
+                placeholder="Título"
+                {...register("title")}
+              />
+              {errors.title && <p className="error">{errors.title.message}</p>}
+            </div>
 
-          <div className="form-group">
-            <label>Preço</label>
-            <input
-              className="input"
-              placeholder="Preço"
-              value={novoProduto.price}
-              onChange={(e) =>
-                setNovoProduto({ ...novoProduto, price: e.target.value })
-              }
-            />
-          </div>
+            <div className="form-group">
+              <label>Preço</label>
+              <input
+                className="input"
+                placeholder="Preço"
+                type="number"
+                {...register("price")}
+              />
+              {errors.price && <p className="error">{errors.price.message}</p>}
+            </div>
 
-          <div className="form-group">
-            <label>Descrição</label>
-            <input
-              className="input"
-              placeholder="Descrição"
-              value={novoProduto.description}
-              onChange={(e) =>
-                setNovoProduto({
-                  ...novoProduto,
-                  description: e.target.value,
-                })
-              }
-            />
-          </div>
+            <div className="form-group">
+              <label>Descrição</label>
+              <input
+                className="input"
+                placeholder="Descrição"
+                {...register("description")}
+              />
+              {errors.description && <p className="error">{errors.description.message}</p>}
+            </div>
 
-          <button className="button button--primary" onClick={criarProduto}>
-            Criar produto
-          </button>
+            <button className="button button--primary" type="submit">
+              Criar produto
+            </button>
+          </form>
         </div>
 
         <div className="dashboard-list card">

@@ -3,6 +3,11 @@ import "./Login.css";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
+const schema = Yup.object().shape({
+    nome: Yup.string().required('Nome é obrigatório'),
+    senha: Yup.string().required('Senha é obrigatória'),
+});
+
 export default function Login({ setCurrentUser }){
     const navigate = useNavigate();
 
@@ -11,6 +16,7 @@ export default function Login({ setCurrentUser }){
 
     const[CampoNome,setCampoNome] = useState("");
     const[CampoSenha,setCampoSenha] = useState("");
+    const[errors, setErrors] = useState({});
 
     useEffect(()=>{
         try{
@@ -29,6 +35,14 @@ export default function Login({ setCurrentUser }){
     }
 
     function Logar() {
+        try {
+            schema.validateSync({ nome: CampoNome, senha: CampoSenha });
+            setErrors({});
+        } catch (error) {
+            setErrors({ [error.path]: error.message });
+            return;
+        }
+
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const user = users.find(u => u.nome === CampoNome && u.senha === CampoSenha);
         if (user) {
@@ -52,7 +66,9 @@ export default function Login({ setCurrentUser }){
         <>
         <div className="login-container">
         <input onChange={(texto)=>{setCampoNome(texto.target.value)}} type="text" placeholder="Nome" />
+        {errors.nome && <p className="error">{errors.nome}</p>}
         <input onChange={(texto)=>{setCampoSenha(texto.target.value)}} type={MostrarSenha ? "text" : "password"} placeholder="Senha" />
+        {errors.senha && <p className="error">{errors.senha}</p>}
         <label>
             <input onChange={(ab)=>{setCaixa(ab.target.checked)}} type="checkbox"/>
             Permanecer logado

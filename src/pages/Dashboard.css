@@ -190,6 +190,12 @@
   gap: 14px;
 }
 
+.error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
 @media (max-width: 780px) {
   .dashboard-header {
     flex-direction: column;

@@ -8,6 +8,8 @@ import { BrowserRouter, NavLink,Route,Routes, useNavigate } from 'react-router-d
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from './COMPONENTS/PrivateRoute'
 import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import 'primeicons/primeicons.css';
         
@@ -74,6 +76,7 @@ function AppContent() {
           <Route path='/Dashboard' element={<PrivateRoute><Dashboard/></PrivateRoute>}/>
           <Route path='/cadastro' element={<Cadastro/>}/>
         </Routes>
+        <ToastContainer />
       </>
   )
 }
