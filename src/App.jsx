@@ -53,14 +53,18 @@ function AppContent() {
     <>
         <nav className="navbar">
           <NavLink to='/' className="nav-link"><h2 style={{fontWeight: 'bold'}}>LiarShop</h2></NavLink>
-          <NavLink to='/Dashboard' className="nav-link">Dash</NavLink>
-          <NavLink to='/login' className="nav-link">Login</NavLink>
-          
-          <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
-          <NavLink to='/carrinho' className="nav-link"><i className="pi pi-shopping-cart" style={{fontSize:'1.5rem'}}></i></NavLink>
           {currentUser && (
+            <NavLink to='/Dashboard' className="nav-link">Dash</NavLink>
+          )}
+          {!currentUser ? (
+            <>
+              <NavLink to='/login' className="nav-link">Login</NavLink>
+              <NavLink to='/cadastro' className="nav-link">Cadastro</NavLink>
+            </>
+          ) : (
             <button onClick={handleLogout} className="logout-btn">Sair</button>
           )}
+          <NavLink to='/carrinho' className="nav-link"><i className="pi pi-shopping-cart" style={{fontSize:'1.5rem'}}></i></NavLink>
         </nav>
         <Routes>
           <Route path='/' element={<Home/>}/>

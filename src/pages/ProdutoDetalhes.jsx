@@ -50,6 +50,19 @@ export default function ProdutoDetalhe() {
 
     toast.success(`${NumCarinho} item(ns) adicionados ao carrinho`)
   }
+  function removerDoCarrinho() {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
+
+    const novoCarrinho = carrinho.filter(item => item.id !== produto.id)
+
+    if (novoCarrinho.length === carrinho.length) {
+      toast.error("Produto não está no carrinho")
+      return
+    }
+
+    localStorage.setItem("carrinho", JSON.stringify(novoCarrinho))
+    toast.success("Produto removido do carrinho com sucesso")
+  }
 
   function comprar() {
     if (NumCarinho <= 0) {
@@ -76,6 +89,9 @@ export default function ProdutoDetalhe() {
             <button onClick={comprar}>Comprar</button>
             <button onClick={adicionarAoCarrinho}>
               Adicionar ao carrinho
+            </button>
+            <button onClick={removerDoCarrinho}>
+              Remover do carrinho
             </button>
           </div>
 
