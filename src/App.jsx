@@ -19,7 +19,6 @@ function AppContent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Initialize localStorage with users if not present
     if (!localStorage.getItem('users')) {
       const initialUsers = [
         {
@@ -37,7 +36,6 @@ function AppContent() {
       ];
       localStorage.setItem('users', JSON.stringify(initialUsers));
     }
-    // Check if user is already logged in
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
       setCurrentUser(user);
